@@ -1,5 +1,5 @@
 require 'sinatra'
 
 get '/' do
-    "Hello, demolicious!"
+    "<h1>Hello, world!</h1>"
 end
