@@ -8,7 +8,7 @@ set :deploy_to, '/var/factor/test'
 set :ssh_options, {:forward_agent=>true, :keys=>[ENV['KEY_FILE']]}
 
 set :user, "factor"
-set :use_sudo, false
+set :use_sudo, true
 
 set :format, :pretty
 set :log_level, :debug
@@ -25,8 +25,9 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
+      dir = "/var/factor/test/current"
       sudo "pkill -f web.rb; true"
-      sudo "cd /var/factor/test/current/ && bundle exec rackup -p 80 -D"
+      sudo "BUNDLE_GEMFILE=#{dir}/Gemfile bundle exec rackup -p 80 -D #{dir}/config.ru"
     end
   end
 
