@@ -26,7 +26,7 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       sudo "pkill -f web.rb; true"
-      sudo "cd /var/factor/test/current/ && bundle exec ruby web.rb -o 0.0.0.0 &"
+      sudo "cd /var/factor/test/current/ && bundle exec rackup -p 80 -D"
     end
   end
 
